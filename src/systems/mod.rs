@@ -8,3 +8,5 @@ mod move_ball;
 pub use move_ball::*;
 mod check_collisions;
 pub use check_collisions::*;
+mod populate_brick_materials;
+pub use populate_brick_materials::*;

@@ -2,6 +2,7 @@ mod components;
 mod enums;
 mod events;
 mod plugins;
+mod resources;
 mod scenes;
 mod systems;
 

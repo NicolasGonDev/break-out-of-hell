@@ -2,7 +2,7 @@ use bevy::{
     asset::Assets,
     camera::Camera2d,
     ecs::name::Name,
-    ecs::system::{Commands, ResMut},
+    ecs::system::{Commands, Res, ResMut},
     math::Vec2,
     math::Vec3,
     mesh::Mesh,
@@ -11,9 +11,9 @@ use bevy::{
     transform::components::Transform,
 };
 
-use crate::scenes::player;
 use crate::scenes::wall;
 use crate::scenes::{ball, brick};
+use crate::{resources::BrickMaterials, scenes::player};
 
 pub fn spawn_ball(
     mut commands: Commands,
@@ -22,19 +22,6 @@ pub fn spawn_ball(
 ) {
     commands.spawn_scene(ball(
         Vec3::new(0f32, 300f32, 5f32),
-        12f32,
-        meshes,
-        materials,
-    ));
-}
-
-pub fn spawn_ball2(
-    mut commands: Commands,
-    meshes: ResMut<Assets<Mesh>>,
-    materials: ResMut<Assets<ColorMaterial>>,
-) {
-    commands.spawn_scene(ball(
-        Vec3::new(100f32, -300f32, 5f32),
         12f32,
         meshes,
         materials,
@@ -59,7 +46,7 @@ pub fn spawn_walls(
 pub fn spawn_bricks(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<ColorMaterial>>,
+    materials: Res<BrickMaterials>,
 ) {
     let width: i32 = 900;
     let height: i32 = 300;
@@ -76,7 +63,7 @@ pub fn spawn_bricks(
                 Vec2::new(8f32, 8f32),
                 format!("Brick {x} {y}"),
                 &mut meshes,
-                &mut materials,
+                &materials,
             ));
         }
     }

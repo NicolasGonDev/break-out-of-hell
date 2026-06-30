@@ -8,16 +8,17 @@ use bevy::{
 
 use crate::components::{Brick, Collider, Health, Shape};
 use crate::events::BallCollided;
+use crate::resources::BrickMaterials;
 
 pub fn brick(
     position: Vec3,
     size: Vec2,
     name: String,
     meshes: &mut ResMut<Assets<Mesh>>,
-    materials: &mut ResMut<Assets<ColorMaterial>>,
+    materials: &Res<BrickMaterials>,
 ) -> impl Scene {
     let shape = meshes.add(Rectangle::new(size.x, size.y));
-    let material = materials.add(ColorMaterial::from_color(PINK));
+    let material = materials.get(3).unwrap().clone();
 
     bsn! {
         Name(name)
@@ -34,13 +35,15 @@ pub fn brick(
 
 fn take_damage(
     event: On<BallCollided>,
-    mut query: Query<(&mut Health, &Name), With<Brick>>,
+    mut query: Query<(&mut Health, &mut MeshMaterial2d<ColorMaterial>, &Name), With<Brick>>,
     mut commands: Commands,
+    materials: Res<BrickMaterials>,
 ) {
-    if let Ok((mut health, name)) = query.get_mut(event.entity) {
+    if let Ok((mut health, mut material, name)) = query.get_mut(event.entity) {
         **health = (**health).saturating_sub(1);
-        let h = **health;
-        info!("{name} GOT HIT! {h} left!");
+        // let h = **health;
+        // info!("{name} GOT HIT! {h} left!");
+        *material = MeshMaterial2d(materials.get((**health) as usize).unwrap().clone());
         if **health == 0 {
             commands.entity(event.entity).despawn();
         }
