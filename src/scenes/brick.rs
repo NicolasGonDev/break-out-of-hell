@@ -1,4 +1,3 @@
-use bevy::color::palettes::css::PINK;
 use bevy::prelude::*;
 use bevy::{
     math::Vec3,
@@ -35,14 +34,12 @@ pub fn brick(
 
 fn take_damage(
     event: On<BallCollided>,
-    mut query: Query<(&mut Health, &mut MeshMaterial2d<ColorMaterial>, &Name), With<Brick>>,
+    mut query: Query<(&mut Health, &mut MeshMaterial2d<ColorMaterial>), With<Brick>>,
     mut commands: Commands,
     materials: Res<BrickMaterials>,
 ) {
-    if let Ok((mut health, mut material, name)) = query.get_mut(event.entity) {
+    if let Ok((mut health, mut material)) = query.get_mut(event.entity) {
         **health = (**health).saturating_sub(1);
-        // let h = **health;
-        // info!("{name} GOT HIT! {h} left!");
         *material = MeshMaterial2d(materials.get((**health) as usize).unwrap().clone());
         if **health == 0 {
             commands.entity(event.entity).despawn();
