@@ -1,0 +1,4 @@
+{
+    "rust-analyzer.runnables.bench.overrideCommand": null,
+    "rust-analyzer.cargo.features": ["inspector"]
+}
