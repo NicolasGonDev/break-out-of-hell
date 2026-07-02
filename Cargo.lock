@@ -1985,6 +1985,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "break-out-of-hell"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bevy-inspector-egui",
+ "log",
+ "tracing",
+]
+
+[[package]]
 name = "bstr"
 version = "1.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4734,16 +4744,6 @@ dependencies = [
  "serde_derive",
  "typeid",
  "unicode-ident",
-]
-
-[[package]]
-name = "rpg-fun"
-version = "0.1.0"
-dependencies = [
- "bevy",
- "bevy-inspector-egui",
- "log",
- "tracing",
 ]
 
 [[package]]
