@@ -1,10 +1,11 @@
 use bevy::{
     asset::Assets,
-    camera::Camera2d,
-    ecs::name::Name,
-    ecs::system::{Commands, Res, ResMut},
-    math::Vec2,
-    math::Vec3,
+    camera::{Camera2d, OrthographicProjection, Projection},
+    ecs::{
+        name::Name,
+        system::{Commands, Res, ResMut},
+    },
+    math::{Vec2, Vec3},
     mesh::Mesh,
     scene::CommandsSceneExt,
     sprite_render::ColorMaterial,
@@ -86,20 +87,26 @@ pub fn spawn_camera(mut commands: Commands) {
     commands.spawn((
         Name::new("Camera"),
         Camera2d::default(),
-        Transform::from_xyz(0f32, 0f32, -5f32).looking_at(Vec3::Z, Vec3::Y),
+        Projection::Orthographic(OrthographicProjection {
+            scaling_mode: bevy::camera::ScalingMode::AutoMin {
+                min_width: 1000f32,
+                min_height: 1000f32,
+            },
+            ..OrthographicProjection::default_2d()
+        }),
     ));
 }
 
 // top, right, bottom, left
 const WALL_POS: [(f32, f32); 4] = [
-    (0f32, -360f32),
-    (640f32, 0f32),
-    (0f32, 360f32),
-    (-640f32, 0f32),
+    (0f32, -500f32),
+    (500f32, 0f32),
+    (0f32, 500f32),
+    (-500f32, 0f32),
 ];
 const WALL_SIZES: [(f32, f32); 4] = [
-    (1280f32, 8f32),
-    (8f32, 720f32),
-    (1280f32, 8f32),
-    (8f32, 720f32),
+    (1000f32, 8f32),
+    (8f32, 1000f32),
+    (1000f32, 8f32),
+    (8f32, 1000f32),
 ];

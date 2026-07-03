@@ -4,8 +4,8 @@ pub fn window_plugin() -> WindowPlugin {
     WindowPlugin {
         primary_window: Some(Window {
             mode: bevy::window::WindowMode::Windowed,
-            resolution: WindowResolution::new(1280, 720),
-            resizable: false,
+            resolution: WindowResolution::new(800, 800),
+            resizable: true,
             ..Default::default()
         }),
         ..Default::default()
